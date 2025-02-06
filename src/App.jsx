@@ -13,8 +13,10 @@ const App = () => {
   }, []);
 
   const handleGuess = (guessedColor) => {
+    const statusElement = document.querySelector('.status');
+    
     if (guessedColor === targetColor) {
-      setGameStatus("Congratulations! You guessed correctly!");
+      setGameStatus("Correct! You guessed correctly!");
       setScore((prevScore) => prevScore + 1);
 
       const colorBox = document.querySelector('.color-box');
@@ -23,17 +25,24 @@ const App = () => {
       setTimeout(() => {
         colorBox.classList.remove('celebration');
         startNewGame();
-      }, 1000); 
+      }, 1000);
+
+      
+      statusElement.classList.add('fade-in');
     } else {
-      setGameStatus("Oops... Wrong Guess! Try Again.");
+      setGameStatus("Wrong! oops... Try Again.");
 
-      const status = document.querySelector('.status');
-      status.classList.add('fade-out');
-
+      
+      statusElement.classList.add('fade-out');
+      
       setTimeout(() => {
-        status.classList.remove('fade-out');
+        statusElement.classList.remove('fade-out');
       }, 1000);
     }
+
+    setTimeout(() => {
+      statusElement.classList.remove('fade-in');
+    }, 1000);
   };
 
   const startNewGame = () => {
